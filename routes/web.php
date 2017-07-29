@@ -38,7 +38,7 @@ Route::get('/admin/siswa',function(){
 
 
 //test database
-Route::get('/db/byid', function (Request $request) {
+/*Route::get('/db/byid', function (Request $request) {
     //$results = DB::select('select * from my_todo_lists');
     $id = $request->id;
     $results = DB::select('select * from my_todo_lists where id = ?', [$id])[0];
@@ -67,7 +67,7 @@ Route::post('/db/insert', function () {
     catch(\Exception $e){
         return $e->getMessage();
     }
-});
+});*/
 
 /*Route::get('/', function () {
     $data = ['name'=>'Erick',
