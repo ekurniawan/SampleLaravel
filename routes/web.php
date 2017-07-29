@@ -18,9 +18,7 @@ Route::get('/', 'HelloWorldController@GetHello');
 /*Route::get('/helloworld', function () {
     return view('welcome');
 });*/
-
 Route::get('/helloworld/{nama}','HelloWorldController@GetHello2');
-
 Route::resource('siswa', 'SiswaController');
 Route::get('/guru', 'GuruController@index');
 
@@ -37,6 +35,34 @@ Route::get('/admin/users','HelloWorldController@myAdmin')->name('admin.users');
 Route::get('/admin/siswa',function(){
     return "Siswa Admin";
 })->name('admin.siswa');
+
+
+//test database
+Route::get('/db/byid', function (Request $request) {
+    //$results = DB::select('select * from my_todo_lists');
+    $id = $request->id;
+    $results = DB::select('select * from my_todo_lists where id = ?', [$id]);
+    return $results;
+});
+
+Route::get('/db', function () {
+    return DB::select('select * from my_todo_lists');
+});
+
+Route::get('/db/insert', function () {
+    try{
+        $result = DB::insert('insert into my_todo_lists (name) values (?)', ['Belajar Javascript']);
+        return "Berhasil tambah data ".$result;
+    }
+    catch(\Exception $e){
+        return $e->getMessage();
+    }
+});
+
+Route::get('/db/update/{id}', function ($id) {
+    $result = DB::update('update my_todo_lists set name=? where id = ?', ['Ini data diupdate',$id]);
+    return "Data berhasil diupdate ".$result;
+});
 
 /*Route::get('/', function () {
     $data = ['name'=>'Erick',
@@ -58,14 +84,14 @@ Route::get('/admin/siswa',function(){
 
 Route::resource('todos', 'TodoListController');
 
-Route::get('/db', function () {
+/*Route::get('/db', function () {
     //return DB::select('show tables;');
     return DB::table('todo_lists')->get(); 
     //DB::table('todo_lists')->insert(array('name'=>'Belajar Laravel Database..'));
     //return DB::table('todo_lists')->get();
     //$result = DB::table('todo_lists')->where('name','=','Belajar Laravel Basic')->first();
     //return $result->name;
-});
+});*/
 
 //menggunakan routing
 //Route::when('*','csrf'.['post','put','patch']);
