@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 class GuruController extends Controller
 {
     public function index(){
-        return view('guru.index');
+        $username = ["username"=>"budi"];
+        return view('guru.index')->with($username);
     }
 }
