@@ -41,27 +41,32 @@ Route::get('/admin/siswa',function(){
 Route::get('/db/byid', function (Request $request) {
     //$results = DB::select('select * from my_todo_lists');
     $id = $request->id;
-    $results = DB::select('select * from my_todo_lists where id = ?', [$id]);
-    return $results;
+    $results = DB::select('select * from my_todo_lists where id = ?', [$id])[0];
+    return response()->json($results);
 });
 
 Route::get('/db', function () {
     return DB::select('select * from my_todo_lists');
 });
 
-Route::get('/db/insert', function () {
+Route::get('/db/update/{id}', function ($id) {
+    $result = DB::update('update my_todo_lists set name=? where id = ?', ['Ini data diupdate',$id]);
+    return "Data berhasil diupdate ".$result;
+});
+
+Route::get('/db/delete/{id}', function ($id) {
+    $result = DB::delete('delete from my_todo_lists where id = ?', [$id]);
+    return "Data berhasil di delete ".$result;
+});
+
+Route::post('/db/insert', function () {
     try{
-        $result = DB::insert('insert into my_todo_lists (name) values (?)', ['Belajar Javascript']);
+        $result = DB::insert('insert into my_todo_lists (name) values (?)', ['Belajar C#']);
         return "Berhasil tambah data ".$result;
     }
     catch(\Exception $e){
         return $e->getMessage();
     }
-});
-
-Route::get('/db/update/{id}', function ($id) {
-    $result = DB::update('update my_todo_lists set name=? where id = ?', ['Ini data diupdate',$id]);
-    return "Data berhasil diupdate ".$result;
 });
 
 /*Route::get('/', function () {
