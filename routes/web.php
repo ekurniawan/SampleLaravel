@@ -22,6 +22,7 @@ Route::get('/', 'HelloWorldController@GetHello');
 Route::get('/helloworld/{nama}','HelloWorldController@GetHello2');
 
 Route::resource('siswa', 'SiswaController');
+Route::get('/guru', 'GuruController@index');
 
 /*Route::prefix('admin')->group(function () {
     Route::get('/', function () {
