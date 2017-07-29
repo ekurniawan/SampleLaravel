@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
 
-class SiswaController extends Controller
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\MytodoList;
+
+class MyTodoListController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -12,10 +15,9 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        $username = session('username');
-        //$myArray = ["nama"=>"erick","alamat"=>"gowongan"];
-        return view('siswa.index')->with('username',$username);
-        //return redirect()->route('admin.users',['nama'=>'erick','alamat'=>'Gowongan Lor 46']);
+        session(["username"=>"erick"]);
+        $results = MytodoList::all();
+        return view('mytodolist.index')->with('todolists',$results);
     }
 
     /**
@@ -25,7 +27,7 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        return "Anda menambahkan create";
+        return view('mytodolist.create');
     }
 
     /**
@@ -36,7 +38,17 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name'=>'bail|required|unique:mytodo_lists,name'
+        ]);
+
+        //Log::info("complete ".$request->complete);
+        $mytodolist = new MytodoList();
+        $mytodolist->name = $request->name;
+        $mytodolist->complete = $request->complete=="on"?1:0;
+        $mytodolist->save();
+        //return redirect('mytodolist')->with('pesan','Tambah data berhasil !');
+        return redirect()->route('mytodolist.index')->with('pesan','Tambah data berhasil !');
     }
 
     /**
@@ -45,10 +57,9 @@ class SiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id,Request $request)
+    public function show($id)
     {
-        $nama = $request->nama;
-        return "Hello World ".$id." nama anda ".$nama;
+        //
     }
 
     /**

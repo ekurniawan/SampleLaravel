@@ -5,6 +5,6 @@
 @endsection
 
 @section('content')
-    <h2>Selamat Datang di Sekolah Green School</h2>
+    <h2>Selamat Datang {{ $username }} di Sekolah Green School</h2>
     <p>Hello !!!</p>
 @endsection
