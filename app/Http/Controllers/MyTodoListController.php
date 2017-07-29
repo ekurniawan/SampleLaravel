@@ -70,7 +70,8 @@ class MyTodoListController extends Controller
      */
     public function edit($id)
     {
-        //
+        $mytodolist = MytodoList::findOrFail($id);
+        return view('mytodolist.edit')->withList($mytodolist);
     }
 
     /**
@@ -82,7 +83,15 @@ class MyTodoListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name'=>'required'
+        ]);
+
+        $mytodolist = MytodoList::findOrFail($id);
+        $mytodolist->name = $request->name;
+        $mytodolist->complete = $request->complete=="on"?1:0;
+        $mytodolist->update();
+         return redirect()->route('mytodolist.index')->with('pesan','Update data berhasil !');
     }
 
     /**
