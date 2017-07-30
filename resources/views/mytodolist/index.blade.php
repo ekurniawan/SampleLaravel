@@ -42,3 +42,7 @@
         </tbody>
     </table>
 @endsection
+
+@push('scripts')
+    <script src={{ asset('js/myapp.js') }}></script>
+@endpush
