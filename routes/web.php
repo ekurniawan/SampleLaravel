@@ -22,6 +22,13 @@ Route::get('/helloworld/{nama}','HelloWorldController@GetHello2');
 Route::resource('siswa', 'SiswaController');
 Route::get('/guru', 'GuruController@index');
 Route::resource('/mytodolist', 'MyTodoListController');
+Route::resource('/mytodoitem','MyTodoItemController');
+
+/*\Event::listen('Illuminate\Database\Events\QueryExecuted', function ($query) {
+    var_dump($query->sql);
+    var_dump($query->bindings);
+    var_dump($query->time);
+});*/
 
 /*Route::prefix('admin')->group(function () {
     Route::get('/', function () {
@@ -89,6 +96,7 @@ Route::post('/db/insert', function () {
 //Route::get('/todos/{id}',"TodoListController@show");
 
 Route::resource('todos', 'TodoListController');
+
 
 /*Route::get('/db', function () {
     //return DB::select('show tables;');
