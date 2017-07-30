@@ -91,7 +91,7 @@ class MyTodoListController extends Controller
         $mytodolist->name = $request->name;
         $mytodolist->complete = $request->complete=="on"?1:0;
         $mytodolist->update();
-         return redirect()->route('mytodolist.index')->with('pesan','Update data berhasil !');
+        return redirect()->route('mytodolist.index')->with('pesan','Update data berhasil !');
     }
 
     /**
@@ -102,6 +102,9 @@ class MyTodoListController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $mytodolist = MytodoList::findOrFail($id);
+       $message = "Delete data ".$mytodolist->name." berhasil !";
+       $mytodolist->delete();
+       return redirect()->route('mytodolist.index')->with('pesan',$message);
     }
 }

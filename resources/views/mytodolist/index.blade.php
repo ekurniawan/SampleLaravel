@@ -19,6 +19,7 @@
                 <th>Name</th>
                 <th>Completed</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -27,7 +28,15 @@
                     <td>{{ $todolist->id }}</td>
                     <td>{{ $todolist->name }}</td>
                     <td>{{ $todolist->complete==0 ? "Not Completed" : "Completed" }}</td>
-                    <td><a href="{{ route('mytodolist.edit',['id'=>$todolist->id]) }}">edit</a></td>
+                    <td><a href="{{ route('mytodolist.edit',['id'=>$todolist->id]) }}" 
+                        class='btn btn-warning btn-xs'>edit</a></td>
+                    <td>
+                        <form method="POST" action="{{ route('mytodolist.destroy',['id'=>$todolist->id]) }}">
+                            {{ method_field('DELETE') }}
+                            {!! csrf_field() !!}
+                            <button type="submit" class="btn btn-danger btn-xs">delete</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
